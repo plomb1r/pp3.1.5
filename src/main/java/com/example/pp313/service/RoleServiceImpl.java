@@ -15,13 +15,11 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleDao roleDao;
 
-    @Transactional
     @Override
     public Collection<Role> allRoles() {
         return roleDao.findAll();
     }
 
-    @Transactional
     @Override
     public Optional<Role> findByName(String name) {
         return Optional.ofNullable(roleDao.findByName(name));

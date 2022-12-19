@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final RoleService roleService;
 
-    @Transactional
     @Override
     public List<User> allUsers() {
         return userDao.allUsers();
@@ -57,20 +56,17 @@ public class UserServiceImpl implements UserService {
         userDao.edit(user);
     }
 
-    @Transactional
     @Override
     public User getById(long id) {
         return userDao.getById(id);
     }
 
-    @Transactional
     @Override
     public User findByUsername(String userName) {
         return userDao.findByUsername(userName);
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findByUsername(username);
         if (user == null) {
