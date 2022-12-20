@@ -1,5 +1,6 @@
 package com.example.pp313.util;
 
+import com.example.pp313.dao.RoleDao;
 import com.example.pp313.model.Role;
 import com.example.pp313.model.User;
 import com.example.pp313.service.RoleService;
@@ -14,16 +15,19 @@ import java.util.List;
 public class LoadDefaultUsers {
     private final RoleService roleService;
     private final UserService userService;
+    private final RoleDao roleDao;
 
-    public LoadDefaultUsers(RoleService roleService, UserService userService) {
+    public LoadDefaultUsers(RoleService roleService, UserService userService, RoleDao roleDao) {
         this.roleService = roleService;
         this.userService = userService;
+        this.roleDao = roleDao;
     }
 
     @PostConstruct
     public void createUsersWithRoles() {
         if (roleService.allRoles().isEmpty()) {
             Role roleAdmin = new Role("ROLE_ADMIN");
+            roleDao.save(roleAdmin);
             List<Role> role_ad = new ArrayList<>();
             role_ad.add(roleAdmin);
             User admin = new User();
@@ -36,6 +40,7 @@ public class LoadDefaultUsers {
             userService.add(admin); // Login: mashina; Password: old
 
             Role roleUser = new Role("ROLE_USER");
+            roleDao.save(roleUser);
             List<Role> role_us = new ArrayList<>();
             role_us.add(roleUser);
             User user = new User();
